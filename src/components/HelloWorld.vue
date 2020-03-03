@@ -69,7 +69,7 @@ export default {
         let puzzleArr = this.puzzles.slice(0, this.puzzles.length - 1);
         const isOK = puzzleArr.every((val, index) => val === index + 1);
         if(isOK) {
-          setTimeout(()=> alert('dyddydy'), 20)  
+          setTimeout(()=> alert('*-*党艳真棒*-*'), 20)  
         }
       }
     }

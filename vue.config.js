@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: '/dy_puzzle/'
+  publicPath: './dist/'
 }
