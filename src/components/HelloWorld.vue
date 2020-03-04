@@ -3,9 +3,11 @@
     <ul class="puzzle-wrap">
       <li v-for="(puzzle, index) in puzzles" 
       :key="index"
-      v-text="puzzle"
-      :class="{'puzzle': true, 'puzzle-empty': !puzzle}"
-      @click="moveFn(index)">
+      
+      :class="{'puzzle': true, 'puzzle-empty': !puzzle.id}"
+      :style="{ background: 'url(' + puzzle.path + ')' }"
+      @click="moveFn(index)"
+      >
       </li>
     </ul>
   </div>
@@ -24,7 +26,7 @@ export default {
       let puzzleArr = [];
 
       for(let i = 1; i < 9; i++) {
-        puzzleArr.push(i);
+        puzzleArr.push({id: i, path: require("../assets/dy" + i + ".png")});
       }
 
       // 随机打乱数组
@@ -35,7 +37,8 @@ export default {
 
       // 页面显示
       this.puzzles = puzzleArr;
-      this.puzzles.push('');
+      this.puzzles.push({id: '', path: ''});
+      console.log(this.puzzles)
     },
 
     // 移动方法
@@ -47,27 +50,28 @@ export default {
           leftNum = this.puzzles[index - 1],
           rightNum = this.puzzles[index + 1];
       // 如果左侧为空，和左侧交换位置
-      if(leftNum === '') {
+      if(leftNum && leftNum.id === '') {
         this.$set(this.puzzles, index - 1, curNum)
-        this.$set(this.puzzles, index, '')
-      } else if(rightNum === '') {
+        this.$set(this.puzzles, index, {id: '', path: ''})
+      } else if(rightNum && rightNum.id === '') {
         this.$set(this.puzzles, index + 1, curNum)
-        this.$set(this.puzzles, index, '')
-      } else if(topNum === '') {
+        this.$set(this.puzzles, index, {id: '', path: ''})
+      } else if(topNum && topNum.id === '') {
         this.$set(this.puzzles, index -3, curNum)
-        this.$set(this.puzzles, index, '')
-      } else if(bottomNum === '') {
+        this.$set(this.puzzles, index, {id: '', path: ''})
+      } else if(bottomNum && bottomNum.id === '') {
         this.$set(this.puzzles, index + 3, curNum)
-        this.$set(this.puzzles, index, '')
+        this.$set(this.puzzles, index, {id: '', path: ''})
       }
+      console.log(this.puzzles)
       this.passFn();
     },
 
     // 判断成功
     passFn() {
-      if(this.puzzles[this.puzzles.length - 1] === '') {
+      if(this.puzzles[this.puzzles.length - 1].id === '') {
         let puzzleArr = this.puzzles.slice(0, this.puzzles.length - 1);
-        const isOK = puzzleArr.every((val, index) => val === index + 1);
+        const isOK = puzzleArr.every((val, index) => val.id === index + 1);
         if(isOK) {
           setTimeout(()=> alert('*-*党艳真棒*-*'), 20)  
         }
@@ -98,13 +102,15 @@ export default {
   width: 100px;
   height:100px;
   float: left;
-  font-size: 20px;
+  font-size: 40px;
+  color: white;
   background-color: #f90;
   text-align: center;
   line-height: 100px;
   border: 1px solid #ccc;
   box-shadow: 1px 1px 4px;
   cursor: pointer;
+  /* opacity: 0.3; */
 }
 
 .puzzle-empty {
