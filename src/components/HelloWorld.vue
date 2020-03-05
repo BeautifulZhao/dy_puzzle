@@ -9,7 +9,7 @@
       <canvas width="100px" height="100px" :id="'canvas' + puzzle"></canvas>
       </li>
     </ul>
-    <img src="../assets/dy_full.png" id="imgs" style="display:none">
+    <img src="../assets/dy_full.png" id="imgs" style="display:none" @load="showImage">
     <button
     class="reset"
     @click="reset"
