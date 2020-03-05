@@ -68,6 +68,11 @@ export default {
           })
         }
       }
+      setTimeout(function() {
+        let blankImg = document.querySelector('#canvas')
+        let ctx = blankImg.getContext('2d');
+        ctx.clearRect(0, 0, 100, 100)
+      }, 1)
     },
 
     // 移动方法
