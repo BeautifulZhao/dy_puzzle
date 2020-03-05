@@ -9,6 +9,7 @@
       <canvas width="100px" height="100px" :id="'canvas' + puzzle"></canvas>
       </li>
     </ul>
+    <img src="../assets/dy_full.png" id="imgs" style="display:none">
     <button
     class="reset"
     @click="reset"
@@ -50,9 +51,9 @@ export default {
     // 图片显示
     showImage() {
       // 图像切割
-      let image = new Image();
-      console.log(this.imgURL)
-      image.src = this.imgURL;
+      // let image = new Image();
+      let image = document.querySelector('#imgs')
+      // image.src = this.imgURL;
       let k = 1;
       for(let i = 0; i < 3; i++) {
         for(let j = 0; j < 3; j++){
