@@ -9,6 +9,7 @@
       <canvas width="100px" height="100px" :id="'canvas' + puzzle"></canvas>
       </li>
     </ul>
+    <!-- load事件的添加为了，保证图片可以正确的渲染到canvas上 -->
     <img src="../assets/dy_full.png" id="imgs" style="display:none" @load="showImage">
     <button
     class="reset"
@@ -29,7 +30,16 @@ export default {
   methods: {
     reset(){
       this.reRender();
-      this.showImage();
+      let _this = this;
+      // DOM 更新之后即puzzles数组更新之后，canvasid更新之后，再去绘制图片
+      this.$nextTick(function(){
+        _this.showImage();
+      })
+      
+      // 清除右下角
+      let blankImg = document.querySelector('li:last-child canvas')
+      let ctx = blankImg.getContext('2d');
+      ctx.clearRect(0, 0, 100, 100)    
     },
     reRender() {
       let puzzleArr = [];
@@ -46,14 +56,13 @@ export default {
       // 页面显示
       this.puzzles = puzzleArr;
       this.puzzles.push('');
+      console.log(this.puzzles)
     },
 
     // 图片显示
     showImage() {
       // 图像切割
-      // let image = new Image();
       let image = document.querySelector('#imgs')
-      // image.src = this.imgURL;
       let k = 1;
       for(let i = 0; i < 3; i++) {
         for(let j = 0; j < 3; j++){
@@ -61,17 +70,12 @@ export default {
           if(canvas) {
             let ctx = canvas.getContext("2d");
             // 将js线程挂起。让gui线程执行。
-            setTimeout(() => {
+            // setTimeout(() => {
               ctx.drawImage(image, j * 100, i * 100, 100, 100, 0, 0, 100, 100)
-            }, 50)
+            // }, 1)
           }
         }
       }
-      setTimeout(function() {
-        let blankImg = document.querySelector('#canvas')
-        let ctx = blankImg.getContext('2d');
-        ctx.clearRect(0, 0, 100, 100)
-      }, 1)
     },
 
     // 移动方法
@@ -126,12 +130,6 @@ export default {
   },
   created() {
     this.reRender();
-  },
-  mounted() {
-    this.showImage();
-  },
-  destroyed() {
-    this.reset();
   }
 }
 </script>
