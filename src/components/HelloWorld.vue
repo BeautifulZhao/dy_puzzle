@@ -62,7 +62,7 @@ export default {
             // 将js线程挂起。让gui线程执行。
             setTimeout(() => {
               ctx.drawImage(image, j * 100, i * 100, 100, 100, 0, 0, 100, 100)
-            }, 10)
+            }, 50)
           }
         }
       }
