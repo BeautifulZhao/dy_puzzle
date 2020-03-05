@@ -83,4 +83,18 @@ $.ajax({
 1. 重新开始后，右下角空白未清空
 
 
+## vue  js中引入图片
+
+assets中的图片在项目编译中会被webpack处理解析为模块依赖，支支持相对路径形式，
+
+```js
+// 必须require进来 或者 引入网络地址
+data() {
+  return {
+    img: require('../assets/1.jpg'),
+    img2: 'https://baidu.com/jpg/2.jpg'
+  }
+}
+```
+
 

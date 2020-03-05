@@ -56,16 +56,14 @@ export default {
       let k = 1;
       for(let i = 0; i < 3; i++) {
         for(let j = 0; j < 3; j++){
-          this.$nextTick(function(){
-            let canvas = document.querySelector("#canvas" + k++)
-            if(canvas) {
-              let ctx = canvas.getContext("2d");
-              // 将js线程挂起。让gui线程执行。
-              setTimeout(() => {
-                ctx.drawImage(image, j * 100, i * 100, 100, 100, 0, 0, 100, 100)
-              }, 1)
-            }
-          })
+          let canvas = document.querySelector("#canvas" + k++)
+          if(canvas) {
+            let ctx = canvas.getContext("2d");
+            // 将js线程挂起。让gui线程执行。
+            setTimeout(() => {
+              ctx.drawImage(image, j * 100, i * 100, 100, 100, 0, 0, 100, 100)
+            }, 10)
+          }
         }
       }
       setTimeout(function() {
@@ -130,6 +128,9 @@ export default {
   },
   mounted() {
     this.showImage();
+  },
+  destroyed() {
+    this.reset();
   }
 }
 </script>
