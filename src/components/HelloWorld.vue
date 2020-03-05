@@ -10,7 +10,7 @@
       </li>
     </ul>
     <!-- load事件的添加为了，保证图片可以正确的渲染到canvas上 -->
-    <img src="../assets/dy_full.png" id="imgs" style="display:none" @load="showImage">
+    <img src="../assets/forDY.png" id="imgs" style="display:none" @load="showImage">
     <button
     class="reset"
     @click="reset"
@@ -168,7 +168,7 @@ export default {
 }
 
 .reset {
-  background-color: #f90;
+  background-color: rgb(120, 112, 185);
   color: #ffffff;
   width: 300px;
   font-size: 20px;
