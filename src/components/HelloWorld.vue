@@ -10,7 +10,7 @@
       </li>
     </ul>
     <!-- load事件的添加为了，保证图片可以正确的渲染到canvas上 -->
-    <img src="../assets/forDY.png" id="imgs" style="display:none" @load="showImage">
+    <img src="../assets/dy_full.png" id="imgs" style="display:none" @load="showImage">
     <button
     class="reset"
     @click="reset"
@@ -23,8 +23,7 @@
 export default {
   data(){
     return { 
-      puzzles: [],
-      imgURL: require('../assets/dy_full.png')
+      puzzles: []
     }
   },
   methods: {
@@ -53,10 +52,18 @@ export default {
         return Math.random() - 0.5;
       })
 
-      // 页面显示
-      this.puzzles = puzzleArr;
-      this.puzzles.push('');
-      console.log(this.puzzles)
+      // 判断数组是否可以复原
+      let count = this.computedReverseNum(puzzleArr)
+      console.log(count);
+      if(count % 2 === 0) {
+        // 页面显示
+        this.puzzles = puzzleArr;
+        this.puzzles.push('');
+      } else {
+        // 重新初始化
+        this.reRender();
+      }
+      
     },
 
     // 图片显示
@@ -69,10 +76,7 @@ export default {
           let canvas = document.querySelector("#canvas" + k++)
           if(canvas) {
             let ctx = canvas.getContext("2d");
-            // 将js线程挂起。让gui线程执行。
-            // setTimeout(() => {
               ctx.drawImage(image, j * 100, i * 100, 100, 100, 0, 0, 100, 100)
-            // }, 1)
           }
         }
       }
@@ -125,6 +129,21 @@ export default {
         if(isOK) {
           setTimeout(()=> alert('*-*党艳真棒*-*'), 20)  
         }
+      }
+    },
+    // 计算排列的逆序数，保证图片可以复原
+    // 排列的逆序数的奇偶性相同就可以复原
+    computedReverseNum(arr) {
+      if(arr) {
+        let count = 0;
+        for(let i = 0; i < arr.length; i++) {
+            for(let j = i + 1; j < arr.length; j++) {
+                if(arr[i] > arr[j]) {
+                    count ++
+                }
+            }
+        }
+        return count
       }
     }
   },
